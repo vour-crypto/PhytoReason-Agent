@@ -1,0 +1,61 @@
+# Scutellaria baicalensis (黄芩) — 物种知识 profile
+# schema 见同目录 README.md；新增物种 = 复制本文件为新 slug.yaml。
+#
+# 数据说明：
+#   - mz 为 [M+H]+（黄酮类中性分子质子化）
+#   - fragments 为诊断碎片离子，标注来源等级（药典/文献/推测）
+#   - pathway_prior.known_regulators 留空 = 显式"未知"（不编造已知调控因子）
+
+species:
+  scientific_name: Scutellaria baicalensis
+  common_name: 黄芩
+  taxonomy_id: 65409
+  genome_status: available            # 染色体级参考基因组已发表（可做 motif/TF 注释）
+
+marker_metabolites:
+  - name: baicalein
+    formula: C15H10O5
+    mz: 271.0601                      # [M+H]+
+    adducts: ["[M+H]+", "[M-H]-"]
+    fragments:
+      - { mz: 253.0495, formula: "C15H9O4", annotation: "[M+H-H2O]+" }
+      - { mz: 169.0132, formula: "C7H5O5", annotation: "RDA A-ring fragment" }
+    reference_rt: null
+    source: 药典
+  - name: baicalin
+    formula: C21H18O11
+    mz: 447.0922                      # [M+H]+（baicalein-7-O-葡萄糖醛酸苷）
+    adducts: ["[M+H]+", "[M-H]-"]
+    fragments:
+      - { mz: 271.0601, formula: "C15H10O5", annotation: "[M+H-GlcA]+" }
+      - { mz: 253.0495, formula: "C15H9O4", annotation: "[M+H-GlcA-H2O]+" }
+    reference_rt: null
+    source: 药典
+  - name: wogonin
+    formula: C16H12O5
+    mz: 285.0758                      # [M+H]+
+    adducts: ["[M+H]+", "[M-H]-"]
+    fragments:
+      - { mz: 270.0523, formula: "C15H10O5", annotation: "[M+H-CH3]+" }
+      - { mz: 183.0288, formula: "C8H7O5", annotation: "RDA A-ring fragment" }
+    reference_rt: null
+    source: 文献
+  - name: wogonoside
+    formula: C22H20O11
+    mz: 461.1078                      # [M+H]+（wogonin-7-O-葡萄糖醛酸苷）
+    adducts: ["[M+H]+", "[M-H]-"]
+    fragments:
+      - { mz: 285.0758, formula: "C16H12O5", annotation: "[M+H-GlcA]+" }
+      - { mz: 270.0523, formula: "C15H10O5", annotation: "[M+H-GlcA-CH3]+" }
+    reference_rt: null
+    source: 文献
+
+pathway_prior:
+  flavone_biosynthesis:               # 黄芩素/汉黄芩素类（黄酮，非黄酮醇）
+    genes: []
+    enzymes: ["PAL", "C4H", "4CL", "CHS", "CHI", "FNSII", "UGT", "OMT"]
+    known_regulators: []              # 显式未知：该物种已知调控因子缺口
+
+refs:
+  - "中国药典 2020 版（黄芩）"
+  - "NCBI Taxonomy: 65409"

@@ -1,0 +1,198 @@
+# Alkaloid MS/MS Fragmentation Rules Database
+# 由 knowledge/compound_profiles/__init__.py 加载（规范入口）。
+# 自 PhytoReason-Agent v5.0 起，chemical_expert.py 已移除，
+# 本文件为 MS/MS 诊断离子规则的唯一数据源。
+#
+# Each entry defines a structural class with:
+#   class       - alkaloid subclass name
+#   formula     - base molecular formula (neutral)
+#   mass        - monoisotopic mass (Da)
+#   fragments   - diagnostic MS² fragment ions with annotations
+#   adducts     - common ionization adducts
+#   pathway     - biosynthetic pathway origin
+#   confidence  - rule reliability: high / medium / low
+
+alkaloids:
+
+  - class: benzylisoquinoline
+    known_metabolites: [papaverine, reticuline, laudanosine]
+    formula: null  # core varies by substitution
+    mass: null
+    fragments:
+      - { mz: 137.0597, formula: "C8H9O2",   annotation: "benzyl cleavage ion" }
+      - { mz: 151.0754, formula: "C9H11O2",  annotation: "methoxy-benzyl ion" }
+      - { mz: 165.0546, formula: "C9H9O3",   annotation: "methylenedioxy-benzyl ion" }
+      - { mz: 192.1025, formula: "C11H14NO2", annotation: "isoquinoline core" }
+      - { mz: 58.0657,  formula: "C3H8N",    annotation: "N-methyl cleavage" }
+      - { mz: 44.0500,  formula: "C2H6N",    annotation: "dimethylamine loss" }
+    adducts: ["[M+H]+", "[M]+"]
+    pathway: tyrosine → (S)-reticuline
+    confidence: high
+
+  - class: berberine_protoberberine
+    known_metabolites: [berberine, coptisine, palmatine, jatrorrhizine]
+    formula: C20H18NO4
+    mass: 336.1230
+    fragments:
+      - { mz: 336.1230, formula: "C20H18NO4", annotation: "parent [M]+" }
+      - { mz: 321.0996, formula: "C19H15NO4", annotation: "[M-CH3]+" }
+      - { mz: 320.0917, formula: "C19H14NO4", annotation: "[M-CH3-H]+" }
+      - { mz: 306.0761, formula: "C18H12NO4", annotation: "[M-2CH3]+" }
+      - { mz: 292.0968, formula: "C18H14NO3", annotation: "[M-CH3-CO-H]+" }
+      - { mz: 278.0812, formula: "C17H12NO3", annotation: "demethylated core" }
+    adducts: ["[M]+", "[M+H]+"]
+    pathway: (S)-reticuline → berberine bridge enzyme
+    confidence: high
+
+  - class: colchicine_tropolone
+    known_metabolites: [colchicine]
+    formula: C22H25NO6
+    mass: 399.1676
+    fragments:
+      - { mz: 399.1676, formula: "C22H25NO6", annotation: "parent [M+H]+" }
+      - { mz: 384.1442, formula: "C21H22NO6", annotation: "[M-CH3]+" }
+      - { mz: 356.1492, formula: "C20H22NO5", annotation: "[M-COCH3]+" }
+      - { mz: 328.1543, formula: "C19H22NO4", annotation: "[M-COCH3-CO]+" }
+      - { mz: 310.1438, formula: "C19H20NO3", annotation: "tropolone ring ion" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    pathway: phenylalanine → (S)-autumnaline
+    confidence: high
+
+  - class: monoterpene_indole_MIA
+    known_metabolites: [ajmalicine, vindoline, catharanthine, reserpine]
+    formula: null
+    mass: null
+    fragments:
+      - { mz: 144.0808, formula: "C10H10N",  annotation: "indole-quinolizidine" }
+      - { mz: 130.0651, formula: "C9H8N",    annotation: "indole fragment" }
+      - { mz: 117.0573, formula: "C8H7N",    annotation: "indole ion" }
+      - { mz: 124.0393, formula: "C6H6NO2",  annotation: "secologanin fragment" }
+      - { mz: 172.1332, formula: "C9H18NO2", annotation: "monoterpene core" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    pathway: tryptophan + secologanin → strictosidine
+    confidence: medium
+
+  - class: purine_alkaloid
+    known_metabolites: [caffeine, theobromine, theophylline]
+    formula: null
+    mass: null
+    fragments:
+      - { mz: 195.0877, formula: "C8H11N4O2", annotation: "caffeine [M+H]+" }
+      - { mz: 181.0720, formula: "C7H9N4O2",  annotation: "theobromine [M+H]+" }
+      - { mz: 167.0564, formula: "C6H7N4O2",  annotation: "xanthine [M+H]+" }
+      - { mz: 138.0662, formula: "C6H8N3O",   annotation: "[M-CH3NCO]+" }
+      - { mz: 110.0713, formula: "C5H8N3",    annotation: "[M-2CH3NCO]+" }
+    adducts: ["[M+H]+"]
+    pathway: xanthosine → caffeine
+    confidence: high
+
+  - class: tropane
+    known_metabolites: [atropine, scopolamine, cocaine]
+    formula: null
+    mass: null
+    fragments:
+      - { mz: 124.1121, formula: "C8H14N",    annotation: "tropane core" }
+      - { mz: 140.1070, formula: "C8H14NO",   annotation: "nortropine" }
+      - { mz: 96.0808,  formula: "C6H10N",    annotation: "tropane ring opening" }
+      - { mz: 82.0651,  formula: "C5H8N",     annotation: "pyrrolidine fragment" }
+      - { mz: 42.0344,  formula: "C2H4N",     annotation: "aziridinium ion" }
+    adducts: ["[M+H]+"]
+    pathway: ornithine/arginine → tropinone
+    confidence: medium
+
+  - class: quinolizidine
+    known_metabolites: [lupanine, sparteine, cytisine]
+    formula: null
+    mass: null
+    fragments:
+      - { mz: 114.0913, formula: "C6H12NO",   annotation: "piperidine fragment" }
+      - { mz: 98.0964,  formula: "C6H12N",    annotation: "dehydropiperidine" }
+      - { mz: 84.0808,  formula: "C5H10N",    annotation: "tetrahydropyridine" }
+      - { mz: 150.1277, formula: "C10H16N",   annotation: "quinolizidine core" }
+      - { mz: 246.1852, formula: "C15H24NO2", annotation: "lupanine skeleton" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    pathway: lysine → cadaverine → lupinine
+    confidence: medium
+
+  - class: steroidal_glycoalkaloid
+    known_metabolites: [solanine, chaconine, tomatine]
+    formula: null
+    mass: null
+    fragments:
+      - { mz: 398.3417, formula: "C27H44NO",  annotation: "solanidine aglycone" }
+      - { mz: 414.3366, formula: "C27H44NO2", annotation: "solasodine aglycone" }
+      - { mz: 430.3315, formula: "C27H44NO3", annotation: "tomatidine aglycone" }
+      - { mz: 204.1747, formula: "C14H22N",   annotation: "steroid E/F ring" }
+      - { mz: 163.1481, formula: "C8H13NO2",  annotation: "sugar fragment" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    pathway: cholesterol → solanidine
+    confidence: high
+
+  - class: bisbenzylisoquinoline
+    known_metabolites: [berbamine, tetrandrine]
+    formula: null
+    mass: null
+    fragments:
+      - { mz: 192.1025, formula: "C11H14NO2", annotation: "isoquinoline core" }
+      - { mz: 206.1176, formula: "C12H16NO2", annotation: "N-methyl-isoquinoline" }
+      - { mz: 220.1332, formula: "C13H18NO2", annotation: "dimethyl-isoquinoline" }
+      - { mz: 107.0491, formula: "C7H7O",     annotation: "benzyl alcohol ion" }
+    adducts: ["[M+H]+", "[M+2H]2+"]
+    pathway: dimerization of benzylisoquinoline monomer
+    confidence: medium
+
+  - class: aporphine
+    known_metabolites: [boldine, magnoflorine, nuciferine]
+    formula: null
+    mass: null
+    fragments:
+      - { mz: 192.1025, formula: "C11H14NO2", annotation: "aporphine core" }
+      - { mz: 178.0868, formula: "C10H12NO2", annotation: "noraporphine" }
+      - { mz: 167.0708, formula: "C8H9O4",    annotation: "catechol fragment" }
+    adducts: ["[M+H]+"]
+    pathway: benzylisoquinoline → aporphine (C-C coupling)
+    confidence: medium
+
+  - class: pyrrolizidine
+    known_metabolites: [senecionine, retrorsine]
+    formula: null
+    mass: null
+    fragments:
+      - { mz: 120.0808, formula: "C8H10N",    annotation: "necine base" }
+      - { mz: 138.0913, formula: "C8H12NO",   annotation: "hydroxy-necine" }
+      - { mz: 94.0651,  formula: "C6H8N",     annotation: "pyrrolizidine core" }
+      - { mz: 80.0495,  formula: "C5H6N",     annotation: "pyrroline fragment" }
+    adducts: ["[M+H]+"]
+    pathway: ornithine → putrescine → homospermidine
+    confidence: low
+
+  - class: pyridine_alkaloid
+    known_metabolites: [nicotine, nornicotine, anatabine, anabasine]
+    formula: C10H14N2
+    mass: 162.1157
+    fragments:
+      - { mz: 163.1230, formula: "C10H15N2",  annotation: "nicotine [M+H]+" }
+      - { mz: 132.0808, formula: "C9H10N",    annotation: "[M+H-CH3NH2]+" }
+      - { mz: 130.0651, formula: "C9H8N",     annotation: "pyridyl-ethene ion" }
+      - { mz: 84.0808,  formula: "C5H10N",    annotation: "N-methyl-pyrrolinium" }
+    adducts: ["[M+H]+"]
+    pathway: pyridine alkaloid biosynthesis (PMT → MPO → QPT → A622)
+    confidence: high
+
+# Neutral loss patterns common in alkaloid MS/MS
+neutral_losses:
+  - { delta: 15.0235, annotation: "CH3 (methyl)" }
+  - { delta: 17.0265, annotation: "NH3 (ammonia)" }
+  - { delta: 18.0106, annotation: "H2O (water)" }
+  - { delta: 28.0061, annotation: "CO (carbon monoxide)" }
+  - { delta: 31.0422, annotation: "CH5N (methylamine)" }
+  - { delta: 32.0262, annotation: "CH4O (methanol)" }
+  - { delta: 42.0106, annotation: "CH2CO (ketene)" }
+  - { delta: 43.0422, annotation: "C2H5N (ethylamine)" }
+  - { delta: 44.0262, annotation: "C2H4O (acetaldehyde)" }
+  - { delta: 45.0215, annotation: "CHO2 (formate)" }
+  - { delta: 46.0055, annotation: "CH2O2 (formic acid)" }
+  - { delta: 59.0371, annotation: "C3H9N (trimethylamine)" }
+  - { delta: 60.0211, annotation: "C2H4O2 (acetic acid)" }
+  - { delta: 162.0528, annotation: "C6H10O5 (hexose)" }
+  - { delta: 176.0321, annotation: "C6H8O6 (glucuronide)" }

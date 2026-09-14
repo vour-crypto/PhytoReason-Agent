@@ -1,0 +1,64 @@
+# Salvia miltiorrhiza (丹参) — 物种知识 profile
+# schema 见同目录 README.md；新增物种 = 复制本文件为新 slug.yaml。
+#
+# 数据说明：
+#   - 二萜醌类（丹参酮）mz 为 [M+H]+；酚酸类（丹酚酸）mz 为 [M-H]-
+#   - fragments 为诊断碎片离子，标注来源等级（药典/文献/推测）
+#   - pathway_prior.known_regulators 留空 = 显式"未知"（不编造已知调控因子）
+
+species:
+  scientific_name: Salvia miltiorrhiza
+  common_name: 丹参
+  taxonomy_id: 22663
+  genome_status: available            # 染色体级参考基因组已发表（可做 motif/TF 注释）
+
+marker_metabolites:
+  - name: tanshinone_IIA
+    formula: C19H18O3
+    mz: 295.1329                      # [M+H]+
+    adducts: ["[M+H]+"]
+    fragments:
+      - { mz: 277.1223, formula: "C19H17O2", annotation: "[M+H-H2O]+" }
+      - { mz: 249.1274, formula: "C18H17O", annotation: "[M+H-CO-H2O]+" }
+    reference_rt: null
+    source: 药典
+  - name: cryptotanshinone
+    formula: C19H20O3
+    mz: 297.1485                      # [M+H]+
+    adducts: ["[M+H]+"]
+    fragments:
+      - { mz: 279.1379, formula: "C19H19O2", annotation: "[M+H-H2O]+" }
+      - { mz: 251.1430, formula: "C18H19O", annotation: "[M+H-CO-H2O]+" }
+    reference_rt: null
+    source: 文献
+  - name: tanshinone_I
+    formula: C18H12O3
+    mz: 277.0859                      # [M+H]+
+    adducts: ["[M+H]+"]
+    fragments:
+      - { mz: 249.0910, formula: "C17H13O2", annotation: "[M+H-CO]+" }
+    reference_rt: null
+    source: 文献
+  - name: salvianolic_acid_B
+    formula: C36H30O16
+    mz: 717.1456                      # [M-H]-
+    adducts: ["[M-H]-"]
+    fragments:
+      - { mz: 519.0928, formula: "C27H19O11", annotation: "[M-H-caffeic acid moiety]-" }
+      - { mz: 321.0400, formula: "C17H13O7", annotation: "danshensu-related fragment" }
+    reference_rt: null
+    source: 药典
+
+pathway_prior:
+  tanshinone_biosynthesis:            # 二萜醌类（GGPP → 松香烷型二萜 → 丹参酮）
+    genes: []
+    enzymes: ["GGPPS", "CPS", "KSL", "CYP76AH1", "CYP76AH3", "CYP76AK1"]
+    known_regulators: []              # 显式未知：该物种已知调控因子缺口
+  rosmarinic_acid_biosynthesis:       # 酚酸类（迷迭香酸 → 丹酚酸）
+    genes: []
+    enzymes: ["PAL", "C4H", "4CL", "TAT", "HPPR", "RAS", "CYP98A14"]
+    known_regulators: []
+
+refs:
+  - "中国药典 2020 版（丹参）"
+  - "NCBI Taxonomy: 22663"

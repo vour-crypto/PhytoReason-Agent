@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>PhytoReason 工作台 · 数据驱动基线(冻结版 v2)</title>
+<!--
+  ═══════════════════════════════════════════════════════════════
+  本文件 = Phase 6.1 视觉与结构基线(冻结 v2)。
+  样式与默认结构(含全部空状态)= 最终界面的样子。
+  实现者任务:①把 <style>/<script> 拆到 static/assets/
+  app.css / app.js ②在 WIRES 接入点与 data-* 接入点接
+  真实数据 ③保留 SSE 流式渲染。不是重新设计;不接受设计
+  建议;无数据处保持本文件原样。
+  v2 变更:logo 去后缀;顶栏=项目下拉+搜索占位;会话徽章
+  移至分析页会话列顶部(.sess-ctx)。
+  ═══════════════════════════════════════════════════════════════
+-->
+<link rel="stylesheet" href="/static/assets/app.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">🌿 PhytoReason</div>
+  <div class="top-right"><div class="icon-btn" id="gear-btn" title="设置">⚙️</div></div>
+</div>
+
+<div class="main">
+  <div class="side">
+    <div class="hint">工作台</div>
+    <div class="nav active" data-page="dashboard">📊 总览</div>
+    <div class="nav" data-page="analysis">💬 分析</div>
+    <div class="nav" data-page="hyp">🧬 假设池</div>
+    <div class="nav" data-page="data">📂 数据</div>
+    <div class="sep"></div>
+    <div class="nav disabled">📁 项目</div>
+    <div class="nav disabled">📈 图库</div>
+    <div class="nav disabled">📚 知识库</div>
+    <div class="nav" data-page="settings">⚙️ 设置</div>
+  </div>
+
+  <div class="content">
+
+    <div class="page active" id="page-dashboard">
+      <h1>研究工作台</h1>
+      <div class="sub">管理会话、数据与植物代谢调控假设</div>
+
+      <div class="row">
+        <!-- WIRES: 指标来自真实会话聚合;无数据显示 — -->
+        <div class="card metric"><div class="icon">🔬</div><div class="v" data-metric="n_candidates">—</div><div class="l">候选 TF</div></div>
+        <div class="card metric"><div class="icon">💡</div><div class="v" data-metric="n_hypotheses">—</div><div class="l">候选假设</div></div>
+        <div class="card metric"><div class="icon">📂</div><div class="v" data-metric="n_datasets">—</div><div class="l">已接数据</div></div>
+        <div class="card metric"><div class="icon">⚠️</div><div class="v" data-metric="n_degraded">—</div><div class="l">降级工具</div></div>
+      </div>
+
+      <div class="row">
+        <div class="card chart-wrap">
+          <h3>当前会话假设 · 证据融合分</h3>
+          <!-- WIRES: 每个假设一根柱,高度=calibrated_score(0-1);有数据时显示 #hyp-bars 并隐藏下方空状态 -->
+          <div class="bars" id="hyp-bars" style="display:none"></div>
+          <div class="empty" id="hyp-bars-empty"><span class="big">🧬</span>暂无假设<br>在「分析」页运行一次完整 pipeline 后生成</div>
+        </div>
+        <div class="card dark" style="flex:1">
+          <h3>⏳ 最近工具活动</h3>
+          <!-- WIRES: 真实工具调用动态(.dot 进行中/.dot.warn 降级);有记录显示列表并隐藏空状态 -->
+          <div id="task-list"></div>
+          <div class="empty" id="task-empty" style="border-color:rgba(244,243,239,.3);color:rgba(244,243,239,.55)">尚无工具调用记录</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card hyp" style="flex:1">
+          <h3>🏆 当前最优假设</h3>
+          <!-- WIRES: Top-1 假设卡(badge 三级色标 + .conf 条,条宽=calibrated_score);无假设保持空状态 -->
+          <div class="empty"><span class="big">💡</span>暂无假设<br>在「分析」页让 Agent 生成竞争假设后显示</div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-bottom:0">
+        <button class="btn btn-secondary" onclick="goPage('data')">📤 上传数据</button>
+        <button class="btn btn-secondary" onclick="goPage('analysis')">🧪 新建分析</button>
+        <button class="btn btn-secondary" onclick="goPage('hyp')">💡 浏览假设池</button>
+      </div>
+    </div>
+
+    <div class="page" id="page-data">
+      <h1>数据接入</h1>
+      <div class="sub">上传表达矩阵、代谢物矩阵与分组表;解析结果回显于各槽位</div>
+      <div class="row">
+        <div class="card" style="flex:1">
+          <h3>📁 数据文件</h3>
+          <div class="meta">点击各行槽位上传对应文件；多次上传可累积（先①后②亦可）</div>
+          <!-- WIRES: ①-④ 对接现有 /upload 端点;解析后回显 n×m/encoding/warning(.warnline);
+               ④ 长表 m/z-RT-intensity 由 Phase 6.4 Step 2 接入(标准长表: sample, m/z, RT, intensity) -->
+          <div class="slot">
+            <div class="file">① 表达矩阵 <span style="font-weight:400;color:var(--ink-sub)">(基因 × 样本)</span></div>
+            <div class="meta">CSV;首列基因 ID,列名 = 样本 ID<span data-slot="expr"></span></div>
+          </div>
+          <div class="slot">
+            <div class="file">② 代谢物矩阵</div>
+            <div class="meta">CSV;首列代谢物名,列名 = 样本 ID<span data-slot="meta"></span></div>
+          </div>
+          <div class="slot">
+            <div class="file">③ 分组表</div>
+            <div class="meta">CSV;列:sample_id, tissue<span data-slot="md"></span></div>
+          </div>
+          <div class="slot">
+            <div class="file">④ 长表 m/z-RT-intensity</div>
+            <div class="meta">CSV;列:sample, m/z, RT, intensity(自动透视为宽表)<span data-slot="long"></span></div>
+          </div>
+          <div class="slot">
+            <div class="file">⑤ 序列 FASTA（TF 预测）</div>
+            <div class="meta">转录本/蛋白 FASTA;HMM 预测后自动生成 TF 注释并注入会话<span data-slot="tffasta"></span></div>
+          </div>
+          <div class="slot">
+            <div class="file">⑥ MS/MS 谱图（MGF/CSV/MSP）</div>
+            <div class="meta">未知物注释:分子式/结构类/MSI 分级 + 物种锚定;注释表存用户产物目录<span data-slot="ms2"></span></div>
+          </div>
+          <div class="btnrow">
+            <button class="btn btn-primary btn-sm">选择文件上传</button>
+          </div>
+          <div class="meta" style="margin-top:10px">样本信息（随上传写入会话，分析时自动注入；也可稍后在对话中说明）：</div>
+          <div class="input-row">
+            <input id="upload-species" placeholder="物种（学名/俗名，如：两面针 / Zanthoxylum nitidum）" style="flex:2">
+            <input id="upload-target" placeholder="目标代谢物（可选，如 nitidine）">
+          </div>
+          <div class="analysis-picker" id="analysis-picker">
+            <div class="meta" style="margin-top:10px">选择要运行的分析（可多选；未勾选的步骤不会运行）：</div>
+            <label><input type="checkbox" data-analysis="qc" checked> 数据质控（样本相关性 / PCA / 高变基因热图）</label>
+            <label><input type="checkbox" data-analysis="deg"> 差异表达分析 DEG（需表达矩阵）</label>
+            <label><input type="checkbox" data-analysis="dam"> 差异代谢物分析 DAM（需代谢物矩阵）</label>
+            <label><input type="checkbox" data-analysis="correlation"> 基因-代谢物相关网络（需配对）</label>
+            <label><input type="checkbox" data-analysis="wgcna"> WGCNA 共表达模块（需表达矩阵）</label>
+            <label><input type="checkbox" data-analysis="o2pls"> O2PLS 联合成分分析（需配对）</label>
+            <label><input type="checkbox" data-analysis="enrichment"> 联合 KEGG 富集（需配对）</label>
+            <label><input type="checkbox" data-analysis="hypothesis"> 机制假设综合与验证实验建议</label>
+          </div>
+          <button class="btn btn-primary btn-sm" id="start-analysis">📝 生成分析指令</button>
+          <div class="meta" id="start-analysis-hint" style="margin-top:8px">流程：上传文件 → 填样本信息 → 勾选分析 → 生成指令草稿 → 在对话框确认/补充（说明物种与数据）→ 手动发送。分析由你在对话中发起。</div>
+        </div>
+        <div class="card" style="flex:1">
+          <h3>🔍 对齐摘要</h3>
+          <!-- WIRES: sample_alignment_report → n_common / 双侧 dropped / group_source -->
+          <div class="empty"><span class="big">🔗</span>上传后显示样本对齐结果<br>(n_common / 双侧 dropped / 分组来源)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-settings">
+      <h1>设置</h1>
+      <div class="sub">模型、数据目录与备份</div>
+      <div class="row">
+        <div class="card" id="llm-settings-card" style="flex:1">
+          <h3>模型设置</h3>
+          <div class="meta">提供商</div>
+          <select id="llm-provider"><option value="deepseek">DeepSeek</option><option value="openai">OpenAI</option><option value="custom">自定义</option></select>
+          <div class="meta">Base URL</div>
+          <input id="llm-base-url" placeholder="https://api.deepseek.com/v1">
+          <div class="meta">模型名</div>
+          <input id="llm-model" placeholder="deepseek-chat">
+          <div class="meta">API Key</div>
+          <input id="llm-api-key" type="password" placeholder="留空以保留已保存密钥">
+          <button class="btn btn-primary btn-sm" id="llm-save">保存并测试</button>
+          <div class="meta" id="llm-status">尚未探测</div>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:0">
+        <div class="card" style="flex:1">
+          <h3>数据与备份</h3>
+          <div id="paths-list"></div>
+          <div class="meta" style="margin-top:10px">图表保存目录（留空=默认；保存后立即生效）</div>
+          <div class="input-row">
+            <input id="figures-dir-input" placeholder="默认位置见上方图表目录">
+            <button class="btn btn-secondary btn-sm browse-btn" data-browse="figures-dir-input">浏览…</button>
+          </div>
+          <div class="meta">报告保存目录（留空=默认）</div>
+          <div class="input-row">
+            <input id="reports-dir-input" placeholder="默认位置见上方报告目录">
+            <button class="btn btn-secondary btn-sm browse-btn" data-browse="reports-dir-input">浏览…</button>
+          </div>
+          <div class="btnrow">
+            <button class="btn btn-secondary btn-sm" id="dirs-save">保存目录设置</button>
+          </div>
+          <div class="meta">备份导出到（留空=默认"下载"文件夹）</div>
+          <div class="input-row">
+            <input id="backup-dir-input" placeholder="默认：系统「下载」文件夹">
+            <button class="btn btn-secondary btn-sm browse-btn" data-browse="backup-dir-input">浏览…</button>
+          </div>
+          <div class="btnrow">
+            <button class="btn btn-secondary btn-sm" id="data-open">打开数据目录</button>
+            <button class="btn btn-secondary btn-sm" id="backup-export">导出备份</button>
+            <button class="btn btn-secondary btn-sm" id="backup-import">导入备份</button>
+            <input type="file" id="backup-file" accept=".zip" style="display:none">
+          </div>
+          <!-- WIRES: 绘图偏好（后续批次接入） -->
+          <div class="meta" id="backup-status"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-analysis">
+      <div class="ws">
+        <div class="card col-sessions">
+          <button class="btn btn-primary btn-sm" style="width:100%; margin-bottom:8px" id="new-session">＋ 新建会话</button>
+          <div class="btnrow" style="margin-bottom:12px">
+            <button class="btn btn-secondary btn-sm" id="clear-empty-sessions" style="flex:1" title="删除所有未上传数据的空会话">清除空会话</button>
+            <button class="btn btn-secondary btn-sm" id="clear-all-sessions" style="flex:1" title="删除全部会话（含有数据），不可恢复">清空全部</button>
+          </div>
+          <!-- WIRES: 会话上下文徽章(物种/目标代谢物/三件套上传状态),自顶栏移入此处;未设置显示 — -->
+          <div class="sess-ctx" data-ctx="session-badge">物种 <b>—</b> · 目标 <b>—</b><br>数据 <b>—</b></div>
+          <!-- WIRES: 会话列表（GET /sessions，点击切换、×删除；当前会话高亮） -->
+          <div id="session-list"></div>
+          <div class="empty" id="sessions-empty" style="padding:14px 10px">尚无会话</div>
+        </div>
+
+        <div class="card col-chat">
+          <!-- WIRES: degraded_tools 逐条列出(琥珀);无降级保持隐藏 -->
+          <div class="degrade-bar" id="degrade-bar"></div>
+          <div class="chat-area" id="chat-area">
+            <!-- WIRES: 消息渲染(.msg 用户/.msg.ai 助手,SSE 流式写入 .body);
+                 工具调用用 .capsule(运行中默认/✓ .done/降级 .degraded);
+                 markdown 渲染 + /static/figures 图片内联;有消息时移除空状态 -->
+            <div class="empty" id="chat-empty" style="margin-top:40px"><span class="big">💬</span>开始你的第一个问题<br>例:「这是两面针五个组织的配对多组学数据,分析 Nitidine 的候选调控因子」</div>
+          </div>
+          <div class="chat-input">
+            <button class="btn btn-secondary btn-sm">📎</button>
+            <input placeholder="输入科研问题或分析要求...">
+            <button class="btn btn-primary btn-sm">发送</button>
+          </div>
+        </div>
+
+        <div class="card col-result">
+          <h3>📋 结果面板</h3>
+          <div class="result-scroll">
+            <!-- WIRES: fusion_results 渲染 .mini-hyp(badge + .conf 条,宽=calibrated_score);
+                 图表列表来自 GET /figures(PNG 预览 + SVG 矢量下载);默认仅显示本次会话图表 -->
+            <div class="empty" id="figures-empty">暂无结果<br>会话产生图表后在此显示</div>
+            <div id="figure-list"></div>
+            <div class="btnrow" style="margin-top:8px">
+              <button class="btn btn-secondary btn-sm" id="gallery-history">显示历史图表</button>
+              <button class="btn btn-secondary btn-sm" id="figures-clear">清除图表</button>
+              <button class="btn btn-secondary btn-sm" id="export-report">导出分析报告</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-hyp">
+      <h1>假设池</h1>
+      <div class="sub">当前会话生成的候选调控假设与证据评级</div>
+
+      <div class="filters">
+        <select id="hyp-rating-filter">
+          <option value="">不确定性：全部</option>
+          <option value="low">低（较可信）</option>
+          <option value="moderate">中等</option>
+          <option value="high">高</option>
+          <option value="insufficient">证据不足</option>
+        </select>
+        <input id="hyp-search-input" placeholder="🔍 搜索假设标题 / TF / 代谢物">
+      </div>
+      <!-- WIRES: 统计行来自真实假设池（GET /hypotheses） -->
+      <div class="sub" style="margin-top:0" id="hyp-stats">暂无候选假设</div>
+
+      <div class="row">
+        <div id="hyp-list" style="flex:1"></div>
+      </div>
+      <div class="row">
+        <div class="card hyp" style="border-style:dashed; background:transparent; box-shadow:none; display:flex; align-items:center; justify-content:center; min-height:120px; color:var(--ink-faint); cursor:pointer">
+          ＋ 在分析中让 Agent 生成新假设
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="statusbar">
+  <!-- WIRES: /health 驱动;degraded_tools 计数 -->
+  <span class="ok" data-status="health">● Agent 就绪</span>
+  <span data-status="model">模型: —</span>
+  <span data-status="session">会话: —</span>
+  <span class="right" data-status="degraded"></span>
+</div>
+
+<script src="/static/assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+# Zanthoxylum nitidum (两面针) — 物种知识 profile
+# schema 见同目录 README.md；新增物种 = 复制本文件为新 slug.yaml。
+#
+# 数据说明：
+#   - marker_metabolites 的 mz 为 [M]+（季铵盐生物碱，如 nitidine/chelerythrine 带正电荷）
+#   - fragments 为诊断碎片离子，标注来源等级（药典/文献/推测）
+#   - pathway_prior.known_regulators 留空 = 显式"未知"（不编造已知调控因子）
+
+species:
+  scientific_name: Zanthoxylum nitidum
+  common_name: 两面针
+  taxonomy_id: 210110
+  genome_status: unavailable          # 无参考基因组 → TF 注释需同源迁移
+
+marker_metabolites:
+  - name: nitidine
+    formula: C21H18NO4
+    mz: 348.1230                      # [M]+
+    adducts: ["[M]+"]
+    fragments:
+      - { mz: 332.0923, formula: "C20H14NO4", annotation: "[M-CH3]+" }
+      - { mz: 318.0761, formula: "C19H12NO4", annotation: "[M-2CH3]+" }
+      - { mz: 290.0812, formula: "C18H12NO3", annotation: "demethylated core" }
+    reference_rt: null
+    source: 药典
+  - name: chelerythrine
+    formula: C21H18NO4
+    mz: 348.1230                      # [M]+（与 nitidine 同分异构，靠碎片/RT 区分）
+    adducts: ["[M]+"]
+    fragments:
+      - { mz: 332.0923, formula: "C20H14NO4", annotation: "[M-CH3]+" }
+      - { mz: 304.0968, formula: "C19H14NO3", annotation: "[M-CO-CH3-H]+" }
+    reference_rt: null
+    source: 文献
+  - name: sanguinarine
+    formula: C20H14NO4
+    mz: 332.0923                      # [M]+
+    adducts: ["[M]+"]
+    fragments:
+      - { mz: 304.0968, formula: "C19H14NO3", annotation: "[M-CO]+" }
+    reference_rt: null
+    source: 文献
+
+pathway_prior:
+  benzylisoquinoline_alkaloid_biosynthesis:   # BIA → 苯并菲啶类（nitidine/chelerythrine）
+    genes: []
+    enzymes: ["CYP719", "BBE (berberine bridge enzyme)", "6OMT", "CNMT"]
+    search_terms:                     # 注释索引检索词（酶符号在注释中常缺失，
+      - reticuline                    #   用通路中间体/KEGG KO 号在 GO/KEGG 注释列定位通路基因）
+      - coclaurine
+      - norcoclaurine
+      - berberine
+      - K22763
+    known_regulators: []               # 显式未知：该物种已知调控因子缺口
+
+refs:
+  - "中国药典 2020 版（两面针）"
+  - "NCBI Taxonomy: 210110"

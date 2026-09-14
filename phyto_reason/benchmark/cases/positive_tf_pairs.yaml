@@ -1,0 +1,124 @@
+# B01: 已知 TF-代谢物调控对（正向案例，实验验证）
+# 用途: 证据召回测试（TFKnowledgeBase 查询是否能召回这些已知关系）
+# 来源: 经典文献（PMID 与 tf_knowledge_base.py CANONICAL_KNOWLEDGE 一致）
+# 注意: 本文件是"已知答案"，供 benchmark 评测知识层召回率，不是系统输出。
+
+- id: POS-001
+  tf: "AtMYB75 (PAP1)"
+  tf_family: "MYB"
+  target: "anthocyanin"
+  species: "Arabidopsis thaliana"
+  pmid: "25228336"
+  confidence: "confirmed"
+
+- id: POS-002
+  tf: "AtMYB12 (PFG1)"
+  tf_family: "MYB"
+  target: "flavonoid"
+  species: "Arabidopsis thaliana"
+  pmid: "25228336"
+  confidence: "confirmed"
+
+- id: POS-003
+  tf: "AtMYB58/AtMYB63"
+  tf_family: "MYB"
+  target: "lignin"
+  species: "Arabidopsis thaliana"
+  pmid: "24027067"
+  confidence: "confirmed"
+
+- id: POS-004
+  tf: "AtTT8/AtGL3"
+  tf_family: "bHLH"
+  target: "anthocyanin"
+  species: "Arabidopsis thaliana"
+  pmid: "26847441"
+  confidence: "confirmed"
+
+- id: POS-005
+  tf: "AtTTG1"
+  tf_family: "WD40"
+  target: "anthocyanin"
+  species: "Arabidopsis thaliana"
+  pmid: "26847441"
+  confidence: "confirmed"
+
+- id: POS-006
+  tf: "NtWRKY1/NtWRKY2"
+  tf_family: "WRKY"
+  target: "alkaloid"
+  species: "Nicotiana tabacum"
+  pmid: "14593171"
+  confidence: "confirmed"
+
+- id: POS-007
+  tf: "CrORCA3"
+  tf_family: "ERF"
+  target: "alkaloid"
+  species: "Catharanthus roseus"
+  pmid: "17419843"
+  confidence: "confirmed"
+
+- id: POS-008
+  tf: "NtERF189"
+  tf_family: "ERF"
+  target: "alkaloid"
+  species: "Nicotiana tabacum"
+  pmid: "19033552"
+  confidence: "confirmed"
+
+- id: POS-009
+  tf: "CjbHLH1"
+  tf_family: "bHLH"
+  target: "berberine"
+  species: "Coptis japonica"
+  pmid: "25296257"
+  confidence: "confirmed"
+
+- id: POS-010
+  tf: "NtMYC2"
+  tf_family: "bHLH"
+  target: "nicotine"
+  species: "Nicotiana tabacum"
+  pmid: "17419843"
+  confidence: "confirmed"
+
+- id: POS-011
+  tf: "AaWRKY1"
+  tf_family: "WRKY"
+  target: "artemisinin"
+  species: "Artemisia annua"
+  pmid: "28837410"
+  confidence: "confirmed"
+
+- id: POS-012
+  tf: "AaERF1/AaERF2"
+  tf_family: "ERF"
+  target: "artemisinin"
+  species: "Artemisia annua"
+  pmid: "27207470"
+  confidence: "confirmed"
+
+- id: POS-013
+  tf: "AaMYC2"
+  tf_family: "bHLH"
+  target: "artemisinin"
+  species: "Artemisia annua"
+  pmid: "28417071"
+  confidence: "confirmed"
+
+- id: POS-014
+  tf: "GaWRKY1"
+  tf_family: "WRKY"
+  target: "terpenoid"
+  species: "Gossypium arboreum"
+  pmid: "28417071"
+  confidence: "confirmed"
+
+- id: POS-015
+  tf: "AtNST1/AtNST2"
+  tf_family: "NAC"
+  target: "lignin"
+  species: "Arabidopsis thaliana"
+  pmid: "17419843"
+  confidence: "confirmed"

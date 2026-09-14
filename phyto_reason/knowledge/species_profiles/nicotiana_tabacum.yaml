@@ -1,0 +1,84 @@
+# Nicotiana tabacum (烟草) — 物种知识 profile
+# schema 见同目录 README.md；新增物种 = 复制本文件为新 slug.yaml。
+#
+# 数据说明：
+#   - mz 为 [M+H]+（吡啶生物碱类）；绿原酸为 [M-H]-（负离子）
+#   - known_regulators 有文献确认（PMID 见 refs）——本 profile 是首个
+#     非空调控因子条目，全部来自 CANONICAL_KNOWLEDGE 的真实 PMID
+
+species:
+  scientific_name: Nicotiana tabacum
+  common_name: 烟草
+  taxonomy_id: 4097
+  genome_status: available            # TN90 参考基因组已发表
+
+marker_metabolites:
+  - name: nicotine
+    formula: C10H14N2
+    mz: 163.1230                      # [M+H]+
+    adducts: ["[M+H]+"]
+    fragments:
+      - { mz: 132.0808, formula: "C9H10N",  annotation: "[M+H-CH3NH2]+" }
+      - { mz: 130.0651, formula: "C9H8N",   annotation: "pyridyl-ethene ion" }
+      - { mz: 84.0808,  formula: "C5H10N",  annotation: "N-methyl-pyrrolinium" }
+    reference_rt: null
+    source: 文献
+  - name: nornicotine
+    formula: C9H12N2
+    mz: 149.1073                      # [M+H]+
+    adducts: ["[M+H]+"]
+    fragments:
+      - { mz: 132.0808, formula: "C9H10N", annotation: "[M+H-NH3]+" }
+      - { mz: 80.0495,  formula: "C5H6N",  annotation: "pyrrolinium ion" }
+    reference_rt: null
+    source: 文献
+  - name: anatabine
+    formula: C10H12N2
+    mz: 161.1073                      # [M+H]+
+    adducts: ["[M+H]+"]
+    fragments:
+      - { mz: 144.0808, formula: "C10H10N", annotation: "[M+H-NH3]+" }
+      - { mz: 130.0651, formula: "C9H8N",   annotation: "pyridyl-ethene ion" }
+    reference_rt: null
+    source: 文献
+  - name: anabasine
+    formula: C10H14N2
+    mz: 163.1230                      # [M+H]+（与 nicotine 同分异构，靠碎片区分）
+    adducts: ["[M+H]+"]
+    fragments:
+      - { mz: 146.0964, formula: "C10H12N", annotation: "[M+H-NH3]+" }
+      - { mz: 84.0808,  formula: "C5H10N",  annotation: "piperidine ion" }
+    reference_rt: null
+    source: 文献
+  - name: chlorogenic_acid
+    formula: C16H18O9
+    mz: 353.0878                      # [M-H]-
+    adducts: ["[M-H]-"]
+    fragments:
+      - { mz: 191.0556, formula: "C7H11O6", annotation: "quinic acid [M-H]-" }
+      - { mz: 179.0344, formula: "C9H7O4",  annotation: "caffeoyl [M-H]-" }
+    reference_rt: null
+    source: 文献
+
+pathway_prior:
+  pyridine_alkaloid_biosynthesis:     # 尼古丁（PMT → MPO → QPT → A622）
+    genes: []
+    enzymes: ["PMT", "MPO", "QPT", "A622"]
+    search_terms:                     # 注释索引检索词（KEGG KO 号等）
+      - "PMT"
+      - "K18953"
+      - "nicotine"
+    known_regulators:                 # 文献确认（PMID 见 refs，来源 CANONICAL_KNOWLEDGE）
+      - "NtMYC2 (bHLH, PMID:17419843)"
+      - "NtERF189 (ERF, PMID:19033552)"
+      - "NtWRKY1/NtWRKY2 (WRKY, PMID:14593171)"
+  phenylpropanoid_biosynthesis:       # 绿原酸/黄酮（酚酸类）
+    genes: []
+    enzymes: ["PAL", "C4H", "4CL", "HCT", "HQT"]
+    known_regulators: []
+
+refs:
+  - "PMID: 17419843（NtMYC2 调控尼古丁）"
+  - "PMID: 19033552（NtERF189 调控尼古丁）"
+  - "PMID: 14593171（NtWRKY1/2 调控烟草生物碱）"
+  - "NCBI Taxonomy: 4097"

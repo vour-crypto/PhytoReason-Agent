@@ -1,0 +1,85 @@
+# Phenolic Acid MS/MS Fragmentation Rules Database
+# 由 knowledge/compound_profiles/__init__.py 加载（规范入口）。
+#
+# 酚酸类多在负离子模式检测，CO2 丢失（-43.9898）与
+# 咖啡酰基/奎宁酸对（179/191）是核心诊断。
+#
+# Each entry defines a structural class with:
+#   class            - phenolic acid subclass name
+#   formula          - base molecular formula (neutral, representative)
+#   mass             - monoisotopic mass (Da, representative)
+#   fragments        - diagnostic MS² fragment ions
+#   adducts          - common ionization adducts
+#   known_metabolites- 该类典型代谢物（用于名称→规则检索）
+#   pathway          - biosynthetic pathway origin
+#   confidence       - rule reliability: high / medium / low
+
+phenolic_acids:
+
+  - class: hydroxycinnamic_acid
+    formula: C9H8O4
+    mass: 180.0423
+    fragments:
+      - { mz: 179.0344, formula: "C9H7O4",    annotation: "caffeic acid [M-H]-" }
+      - { mz: 135.0446, formula: "C8H7O2",    annotation: "[M-H-CO2]-" }
+      - { mz: 193.0501, formula: "C10H9O4",   annotation: "ferulic acid [M-H]-" }
+      - { mz: 178.0266, formula: "C10H8O3",   annotation: "[M-H-CH3]-" }
+      - { mz: 163.0395, formula: "C9H7O3",    annotation: "p-coumaric acid [M-H]-" }
+    adducts: ["[M-H]-"]
+    known_metabolites: [caffeic_acid, ferulic_acid, p_coumaric_acid, sinapic_acid]
+    pathway: phenylpropanoid (PAL → C4H → 4CL)
+    confidence: high
+
+  - class: hydroxybenzoic_acid
+    formula: C7H6O5
+    mass: 170.0215
+    fragments:
+      - { mz: 169.0137, formula: "C7H5O5",    annotation: "gallic acid [M-H]-" }
+      - { mz: 125.0239, formula: "C6H5O3",    annotation: "[M-H-CO2]-" }
+      - { mz: 137.0239, formula: "C7H5O3",    annotation: "salicylic acid [M-H]-" }
+      - { mz: 93.0341,  formula: "C6H5O",     annotation: "[M-H-CO2]-" }
+    adducts: ["[M-H]-"]
+    known_metabolites: [gallic_acid, salicylic_acid, protocatechuic_acid, vanillic_acid, syringic_acid]
+    pathway: 莽草酸途径（shikimate）或苯丙烷途径降解
+    confidence: high
+
+  - class: chlorogenic_acid_caffeoylquinic
+    formula: C16H18O9
+    mass: 354.0951
+    fragments:
+      - { mz: 353.0878, formula: "C16H17O9",  annotation: "chlorogenic acid [M-H]-" }
+      - { mz: 191.0556, formula: "C7H11O6",   annotation: "quinic acid [M-H]-" }
+      - { mz: 179.0344, formula: "C9H7O4",    annotation: "caffeoyl [M-H]-" }
+      - { mz: 173.0451, formula: "C7H9O5",    annotation: "[quinic-H2O]-" }
+      - { mz: 135.0446, formula: "C8H7O2",    annotation: "caffeoyl-CO2" }
+    adducts: ["[M-H]-"]
+    known_metabolites: [chlorogenic_acid, neochlorogenic_acid, cryptochlorogenic_acid, isochlorogenic_acid, dicaffeoylquinic_acid]
+    pathway: 咖啡酸 + 奎宁酸酯化（HCT）
+    confidence: high
+
+  - class: depside_oligomer
+    formula: C18H16O8
+    mass: 360.0845
+    fragments:
+      - { mz: 359.0767, formula: "C18H15O8",  annotation: "rosmarinic acid [M-H]-" }
+      - { mz: 197.0449, formula: "C9H9O5",    annotation: "danshensu [M-H]-" }
+      - { mz: 179.0344, formula: "C9H7O4",    annotation: "caffeic acid [M-H]-" }
+      - { mz: 161.0239, formula: "C9H5O3",    annotation: "caffeic-H2O" }
+      - { mz: 717.1456, formula: "C36H29O16", annotation: "salvianolic acid B [M-H]-" }
+      - { mz: 519.0928, formula: "C27H19O11", annotation: "[M-H-caffeoyl moiety]-" }
+      - { mz: 321.0400, formula: "C17H13O7",  annotation: "danshensu-related fragment" }
+    adducts: ["[M-H]-"]
+    known_metabolites: [rosmarinic_acid, salvianolic_acid_B, salvianolic_acid_A, lithospermic_acid, danshensu]
+    pathway: 迷迭香酸途径（TAT/HPPR/RAS → CYP98A）
+    confidence: medium
+
+# 酚酸类常见中性丢失
+neutral_losses:
+  - { delta: 15.0235, annotation: "CH3 (methyl)" }
+  - { delta: 18.0106, annotation: "H2O (water)" }
+  - { delta: 28.0061, annotation: "CO (carbon monoxide)" }
+  - { delta: 43.9898, annotation: "CO2 (carbon dioxide)" }
+  - { delta: 44.0262, annotation: "C2H4O (acetaldehyde)" }
+  - { delta: 162.0317, annotation: "caffeoyl moiety" }
+  - { delta: 192.0634, annotation: "quinic acid moiety" }
+  - { delta: 162.0528, annotation: "C6H10O5 (hexose)" }

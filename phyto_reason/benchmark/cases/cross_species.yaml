@@ -1,0 +1,60 @@
+# B06: 跨物种 TF→代谢物 推断对
+# 用途: SpeciesKnowledge / SpeciesRegistry 降级链的跨物种推断测试。
+# known_conservation: plausible = 有文献/保守性证据支持; speculative = 弱支持。
+
+- id: CS-001
+  source_species: "Arabidopsis thaliana"
+  target_species: "Coptis chinensis"
+  tf_family: "bHLH"
+  metabolite: "berberine"
+  known_conservation: "plausible"
+  pmid: "25296257"
+  note: "CjbHLH1 在黄连近缘种日本黄连中鉴定"
+
+- id: CS-002
+  source_species: "Arabidopsis thaliana"
+  target_species: "Scutellaria baicalensis"
+  tf_family: "MYB"
+  metabolite: "baicalein"
+  known_conservation: "speculative"
+  note: "黄酮类 MYB 调控在被子植物中广泛保守"
+
+- id: CS-003
+  source_species: "Arabidopsis thaliana"
+  target_species: "Salvia miltiorrhiza"
+  tf_family: "MYB"
+  metabolite: "tanshinone_IIA"
+  known_conservation: "speculative"
+  note: "二萜类调控因子跨物种保守性证据有限"
+
+- id: CS-004
+  source_species: "Artemisia annua"
+  target_species: "Salvia miltiorrhiza"
+  tf_family: "ERF"
+  metabolite: "tanshinone_IIA"
+  known_conservation: "speculative"
+  note: "ERF 调控萜类在菊科/唇形科有报道"
+
+- id: CS-005
+  source_species: "Arabidopsis thaliana"
+  target_species: "Glycyrrhiza uralensis"
+  tf_family: "MYB"
+  metabolite: "glycyrrhizin"
+  known_conservation: "speculative"
+  note: "皂苷类调控证据有限，期望降级输出"
+
+- id: CS-006
+  source_species: "Nicotiana tabacum"
+  target_species: "Zanthoxylum nitidum"
+  tf_family: "ERF"
+  metabolite: "nitidine"
+  known_conservation: "speculative"
+  note: "生物碱 ERF 调控主要在茄科报道"
+
+- id: CS-007
+  source_species: "Arabidopsis thaliana"
+  target_species: "Epimedium pubescens"
+  tf_family: "MYB"
+  metabolite: "icariin"
+  known_conservation: "speculative"
+  note: "无 profile 物种：期望 ortholog 降级 + 显式缺口"

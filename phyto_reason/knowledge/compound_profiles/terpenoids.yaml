@@ -1,0 +1,100 @@
+# Terpenoid MS/MS Fragmentation Rules Database
+# 由 knowledge/compound_profiles/__init__.py 加载（规范入口）。
+#
+# Each entry defines a structural class with:
+#   class            - terpenoid subclass name
+#   formula          - base molecular formula (neutral, representative)
+#   mass             - monoisotopic mass (Da, representative)
+#   fragments        - diagnostic MS² fragment ions
+#   adducts          - common ionization adducts
+#   known_metabolites- 该类典型代谢物（用于名称→规则检索）
+#   pathway          - biosynthetic pathway origin
+#   confidence       - rule reliability: high / medium / low
+
+terpenoids:
+
+  - class: monoterpene_iridoid
+    formula: C17H24O10
+    mass: 388.1369
+    fragments:
+      - { mz: 389.1442, formula: "C17H25O10", annotation: "geniposide [M+H]+" }
+      - { mz: 227.0914, formula: "C11H15O5",  annotation: "[M+H-Glc]+ (aglycone)" }
+      - { mz: 209.0808, formula: "C11H13O4",  annotation: "[M+H-Glc-H2O]+" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    known_metabolites: [geniposide, loganin, aucubin, catalpol]
+    pathway: MEP → geranyl diphosphate → iridoid (seco-iridoid)
+    confidence: medium
+
+  - class: sesquiterpene_lactone
+    formula: C15H22O5
+    mass: 282.1467
+    fragments:
+      - { mz: 283.1540, formula: "C15H23O5", annotation: "artemisinin [M+H]+" }
+      - { mz: 265.1434, formula: "C15H21O4", annotation: "[M+H-H2O]+" }
+      - { mz: 247.1333, formula: "C15H19O3", annotation: "[M+H-2H2O]+" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    known_metabolites: [artemisinin, dihydroartemisinin, artemether, costunolide, parthenolide]
+    pathway: MVA/MEP → farnesyl diphosphate → germacrene → guaianolide
+    confidence: medium
+
+  - class: labdane_diterpene
+    formula: C20H30O5
+    mass: 350.2093
+    fragments:
+      - { mz: 351.2166, formula: "C20H31O5", annotation: "andrographolide [M+H]+" }
+      - { mz: 333.2060, formula: "C20H29O4", annotation: "[M+H-H2O]+" }
+      - { mz: 303.1955, formula: "C19H27O3", annotation: "[M+H-2H2O-CO]+" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    known_metabolites: [andrographolide, dehydroandrographolide, miltiradiene]
+    pathway: MEP → geranylgeranyl diphosphate → CPP → labdadienyl
+    confidence: medium
+
+  - class: diterpenoid_quinone
+    formula: C19H18O3
+    mass: 294.1256
+    fragments:
+      - { mz: 295.1329, formula: "C19H19O3", annotation: "tanshinone IIA [M+H]+" }
+      - { mz: 277.1223, formula: "C19H17O2", annotation: "[M+H-H2O]+" }
+      - { mz: 249.1274, formula: "C18H17O",  annotation: "[M+H-CO-H2O]+" }
+      - { mz: 297.1485, formula: "C19H21O3", annotation: "cryptotanshinone [M+H]+" }
+    adducts: ["[M+H]+"]
+    known_metabolites: [tanshinone_IIA, cryptotanshinone, tanshinone_I, dihydrotanshinone_I]
+    pathway: MEP → GGPP → CPP → miltiradiene → abietane → ortho-quinone
+    confidence: medium
+
+  - class: pentacyclic_triterpene
+    formula: C30H48O3
+    mass: 456.3603
+    fragments:
+      - { mz: 457.3676, formula: "C30H49O3", annotation: "oleanolic/ursolic acid [M+H]+" }
+      - { mz: 439.3571, formula: "C30H47O2", annotation: "[M+H-H2O]+" }
+      - { mz: 411.3622, formula: "C29H47O",  annotation: "[M+H-H2O-CO]+" }
+      - { mz: 471.3469, formula: "C30H47O4", annotation: "glycyrrhetinic acid [M+H]+" }
+    adducts: ["[M+H]+", "[M-H]-"]
+    known_metabolites: [oleanolic_acid, ursolic_acid, betulinic_acid, glycyrrhetinic_acid, beta_amyrin]
+    pathway: MVA → squalene → 2,3-oxidosqualene → β-amyrin/α-amyrin (OSC)
+    confidence: medium
+
+  - class: triterpene_aglycone_dammarane
+    formula: C30H52O3
+    mass: 460.3916
+    fragments:
+      - { mz: 461.3989, formula: "C30H53O3", annotation: "protopanaxadiol [M+H]+" }
+      - { mz: 443.3884, formula: "C30H51O2", annotation: "[M+H-H2O]+" }
+      - { mz: 425.3776, formula: "C30H49O",  annotation: "[M+H-2H2O]+" }
+      - { mz: 477.3938, formula: "C30H53O4", annotation: "protopanaxatriol [M+H]+" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    known_metabolites: [protopanaxadiol, protopanaxatriol, dammarenediol]
+    pathway: MVA → squalene → dammarenyl cation → dammarane skeleton
+    confidence: medium
+
+# 萜类常见中性丢失
+neutral_losses:
+  - { delta: 18.0106, annotation: "H2O (water)" }
+  - { delta: 28.0061, annotation: "CO (carbon monoxide)" }
+  - { delta: 43.9898, annotation: "CO2 (carbon dioxide)" }
+  - { delta: 32.0262, annotation: "CH4O (methanol)" }
+  - { delta: 60.0211, annotation: "C2H4O2 (acetic acid)" }
+  - { delta: 68.0626, annotation: "C5H8 (isoprene unit)" }
+  - { delta: 162.0528, annotation: "C6H10O5 (hexose)" }
+  - { delta: 176.0321, annotation: "C6H8O6 (glucuronide)" }

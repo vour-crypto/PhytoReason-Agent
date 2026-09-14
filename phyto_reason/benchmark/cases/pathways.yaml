@@ -1,0 +1,56 @@
+# B02: 已知通路基因/酶集（通路映射验证）
+# 用途: BUILTIN_PATHWAYS + compound_profiles pathway 字段 + species profile
+#       pathway_prior.enzymes 的通路映射测试。
+
+- id: PWY-001
+  pathway_id: "map00950"
+  pathway_name: "Isoquinoline alkaloid biosynthesis"
+  expected_enzymes: ["BBE", "CNMT", "6OMT", "4'OMT", "CYP719"]
+  metabolite: "berberine"
+  species_example: "Coptis chinensis"
+
+- id: PWY-002
+  pathway_id: "map00941"
+  pathway_name: "Flavonoid biosynthesis"
+  expected_enzymes: ["CHS", "CHI", "F3H", "FLS", "UGT"]
+  metabolite: "quercetin"
+
+- id: PWY-003
+  pathway_id: "map00942"
+  pathway_name: "Anthocyanin biosynthesis"
+  expected_enzymes: ["CHS", "CHI", "F3H", "DFR", "ANS", "UFGT"]
+  metabolite: "anthocyanin"
+
+- id: PWY-004
+  pathway_id: "map00960"
+  pathway_name: "Nicotine biosynthesis"
+  expected_enzymes: ["PMT", "MPO", "QPT", "A622"]
+  metabolite: "nicotine"
+  species_example: "Nicotiana tabacum"
+
+- id: PWY-005
+  pathway_id: "map00909"
+  pathway_name: "Sesquiterpenoid (artemisinin) biosynthesis"
+  expected_enzymes: ["ADS", "CYP71AV1", "DBR2", "ALDH1"]
+  metabolite: "artemisinin"
+  species_example: "Artemisia annua"
+
+- id: PWY-006
+  pathway_id: "map00900"
+  pathway_name: "Terpenoid backbone biosynthesis"
+  expected_enzymes: ["GGPPS", "FPPS", "HMGR"]
+  metabolite: "tanshinone IIA"
+
+- id: PWY-007
+  pathway_id: "triterpenoid_saponin"
+  pathway_name: "Glycyrrhizin biosynthesis (oleanane)"
+  expected_enzymes: ["β-amyrin synthase", "CYP88D6", "CYP72A154", "UGT73P2"]
+  metabolite: "glycyrrhizin"
+  species_example: "Glycyrrhiza uralensis"
+
+- id: PWY-008
+  pathway_id: "diterpenoid_quinone"
+  pathway_name: "Tanshinone biosynthesis"
+  expected_enzymes: ["CPS", "KSL", "CYP76AH1", "CYP76AH3"]
+  metabolite: "tanshinone IIA"
+  species_example: "Salvia miltiorrhiza"

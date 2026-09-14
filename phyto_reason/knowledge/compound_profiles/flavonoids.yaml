@@ -1,0 +1,106 @@
+# Flavonoid MS/MS Fragmentation Rules Database
+# 由 knowledge/compound_profiles/__init__.py 加载（规范入口）。
+#
+# Each entry defines a structural class with:
+#   class            - flavonoid subclass name
+#   formula          - base molecular formula (neutral, representative)
+#   mass             - monoisotopic mass (Da, representative)
+#   fragments        - diagnostic MS² fragment ions (RDA = retro-Diels-Alder)
+#   adducts          - common ionization adducts
+#   known_metabolites- 该类典型代谢物（用于名称→规则检索）
+#   pathway          - biosynthetic pathway origin
+#   confidence       - rule reliability: high / medium / low
+
+flavonoids:
+
+  - class: flavone
+    formula: C15H10O5
+    mass: 270.0528
+    fragments:
+      - { mz: 271.0601, formula: "C15H11O5", annotation: "apigenin [M+H]+" }
+      - { mz: 287.0550, formula: "C15H11O6", annotation: "luteolin [M+H]+" }
+      - { mz: 153.0182, formula: "C7H5O4",    annotation: "[1,3A]+ RDA (5,7-diOH A-ring)" }
+      - { mz: 135.0446, formula: "C8H7O2",    annotation: "[1,3B]+ RDA" }
+      - { mz: 119.0491, formula: "C8H7O",     annotation: "[1,3B]+ RDA (B-ring)" }
+    adducts: ["[M+H]+", "[M-H]-"]
+    known_metabolites: [apigenin, luteolin, baicalein, wogonin, chrysin]
+    pathway: phenylpropanoid → CHS → flavone (FNSII)
+    confidence: high
+
+  - class: flavonol
+    formula: C15H10O7
+    mass: 302.0427
+    fragments:
+      - { mz: 303.0499, formula: "C15H11O7", annotation: "quercetin [M+H]+" }
+      - { mz: 287.0550, formula: "C15H11O6", annotation: "kaempferol [M+H]+" }
+      - { mz: 153.0182, formula: "C7H5O4",    annotation: "[1,3A]+ RDA (A-ring)" }
+      - { mz: 137.0233, formula: "C7H5O3",    annotation: "[1,3B]+ RDA (B-ring)" }
+      - { mz: 229.0495, formula: "C14H9O3",   annotation: "[M+H-B-ring]+" }
+    adducts: ["[M+H]+", "[M-H]-"]
+    known_metabolites: [quercetin, kaempferol, myricetin, rutin, isorhamnetin]
+    pathway: phenylpropanoid → CHS → dihydroflavonol → flavonol (FLS)
+    confidence: high
+
+  - class: flavanone
+    formula: C15H12O5
+    mass: 272.0685
+    fragments:
+      - { mz: 273.0758, formula: "C15H13O5", annotation: "naringenin [M+H]+" }
+      - { mz: 257.0808, formula: "C15H13O4", annotation: "liquiritigenin [M+H]+" }
+      - { mz: 153.0182, formula: "C7H5O4",    annotation: "[1,3A]+ RDA (5,7-diOH)" }
+      - { mz: 137.0233, formula: "C7H5O3",    annotation: "[1,3A]+ RDA (7-OH)" }
+      - { mz: 147.0441, formula: "C9H7O2",    annotation: "[1,3B]+ RDA" }
+    adducts: ["[M+H]+", "[M-H]-"]
+    known_metabolites: [naringenin, liquiritigenin, hesperetin, eriodictyol, neohesperidin]
+    pathway: phenylpropanoid → CHS → chalcone → flavanone (CHI)
+    confidence: high
+
+  - class: isoflavone
+    formula: C15H10O5
+    mass: 270.0528
+    fragments:
+      - { mz: 271.0601, formula: "C15H11O5", annotation: "genistein [M+H]+" }
+      - { mz: 255.0652, formula: "C15H11O4", annotation: "daidzein [M+H]+" }
+      - { mz: 137.0233, formula: "C7H5O3",    annotation: "[1,3A]+ RDA" }
+      - { mz: 91.0542,  formula: "C7H7",      annotation: "tropylium ion" }
+    adducts: ["[M+H]+", "[M-H]-"]
+    known_metabolites: [genistein, daidzein, glycitein, puerarin, formononetin]
+    pathway: flavanone → isoflavone (IFS, aryl migration)
+    confidence: medium
+
+  - class: flavan-3-ol
+    formula: C15H14O6
+    mass: 290.0790
+    fragments:
+      - { mz: 291.0863, formula: "C15H15O6", annotation: "catechin [M+H]+" }
+      - { mz: 139.0392, formula: "C7H7O3",    annotation: "[1,3A]+ RDA" }
+      - { mz: 123.0442, formula: "C7H7O2",    annotation: "[1,3B]+ RDA" }
+    adducts: ["[M+H]+", "[M-H]-"]
+    known_metabolites: [catechin, epicatechin, epigallocatechin, epicatechin_gallate, epigallocatechin_gallate]
+    pathway: dihydroflavonol → leucoanthocyanidin → flavan-3-ol (LAR/ANS)
+    confidence: medium
+
+  - class: anthocyanidin
+    formula: C15H11O6
+    mass: 287.0550
+    fragments:
+      - { mz: 287.0550, formula: "C15H11O6", annotation: "cyanidin [M]+" }
+      - { mz: 271.0601, formula: "C15H11O5", annotation: "pelargonidin [M]+" }
+      - { mz: 137.0233, formula: "C7H5O3",    annotation: "[1,3A]+ RDA" }
+    adducts: ["[M]+"]
+    known_metabolites: [anthocyanin, cyanidin, delphinidin, pelargonidin, malvidin, peonidin]
+    pathway: leucoanthocyanidin → anthocyanidin (ANS) → glycosylation
+    confidence: medium
+
+# 黄酮类常见中性丢失（O-糖苷键裂解）
+neutral_losses:
+  - { delta: 15.0235, annotation: "CH3 (methyl)" }
+  - { delta: 18.0106, annotation: "H2O (water)" }
+  - { delta: 28.0061, annotation: "CO (carbon monoxide)" }
+  - { delta: 43.9898, annotation: "CO2 (carbon dioxide)" }
+  - { delta: 44.0262, annotation: "C2H4O (acetaldehyde)" }
+  - { delta: 132.0423, annotation: "C5H8O4 (pentose)" }
+  - { delta: 146.0579, annotation: "C6H10O4 (deoxyhexose/rhamnose)" }
+  - { delta: 162.0528, annotation: "C6H10O5 (hexose)" }
+  - { delta: 176.0321, annotation: "C6H8O6 (glucuronide)" }
+  - { delta: 308.1107, annotation: "C12H20O9 (rutinose)" }

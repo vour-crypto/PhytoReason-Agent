@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.pytest_tmp/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Environment
+.env
+.env.local
+
+# Runtime artifacts
+outputs/
+logs/
+data/
+phyto_reason/api/static/figures/
+.phytoreason/
+cmaup_data/
+b4_public_data/
+b4_rerun_full.log
+b4_rerun_detail.json
+
+# Editor / tool state
+.kilo/
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+annotate_*.txt
+
+# 未发表课题数据(仅本地保留,不入库)
+liang.msp
+gene-expression.csv
+meta.csv
+Integrated_Function.annotation.xlsx
+
+# R 运行痕迹
+.Rhistory
+.RData

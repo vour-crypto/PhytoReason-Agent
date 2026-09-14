@@ -1,0 +1,63 @@
+# Coptis chinensis (黄连) — 物种知识 profile
+# schema 见同目录 README.md；新增物种 = 复制本文件为新 slug.yaml。
+#
+# 数据说明：
+#   - marker_metabolites 的 mz 为 [M]+（原小檗碱型季铵盐生物碱带正电荷）
+#   - fragments 为诊断碎片离子，标注来源等级（药典/文献/推测）
+#   - pathway_prior.known_regulators 留空 = 显式"未知"（不编造已知调控因子）
+
+species:
+  scientific_name: Coptis chinensis
+  common_name: 黄连
+  taxonomy_id: 61731
+  genome_status: unavailable          # 无参考基因组 → TF 注释需同源迁移
+
+marker_metabolites:
+  - name: berberine
+    formula: C20H18NO4
+    mz: 336.1230                      # [M]+
+    adducts: ["[M]+"]
+    fragments:
+      - { mz: 321.0996, formula: "C19H15NO4", annotation: "[M-CH3]+" }
+      - { mz: 320.0917, formula: "C19H14NO4", annotation: "[M-CH3-H]+" }
+      - { mz: 306.0761, formula: "C18H12NO4", annotation: "[M-2CH3]+" }
+      - { mz: 278.0812, formula: "C17H12NO3", annotation: "demethylated core" }
+    reference_rt: null
+    source: 药典
+  - name: coptisine
+    formula: C19H14NO4
+    mz: 320.0917                      # [M]+
+    adducts: ["[M]+"]
+    fragments:
+      - { mz: 292.0968, formula: "C18H14NO3", annotation: "[M-CO]+" }
+      - { mz: 262.0863, formula: "C17H12NO2", annotation: "[M-CO-CH2O]+" }
+    reference_rt: null
+    source: 药典
+  - name: palmatine
+    formula: C21H22NO4
+    mz: 352.1543                      # [M]+
+    adducts: ["[M]+"]
+    fragments:
+      - { mz: 337.1308, formula: "C20H19NO4", annotation: "[M-CH3]+" }
+      - { mz: 322.1074, formula: "C19H16NO4", annotation: "[M-2CH3]+" }
+    reference_rt: null
+    source: 文献
+  - name: jatrorrhizine
+    formula: C20H20NO4
+    mz: 338.1387                      # [M]+
+    adducts: ["[M]+"]
+    fragments:
+      - { mz: 323.1152, formula: "C19H17NO4", annotation: "[M-CH3]+" }
+      - { mz: 308.0917, formula: "C18H14NO4", annotation: "[M-2CH3]+" }
+    reference_rt: null
+    source: 文献
+
+pathway_prior:
+  benzylisoquinoline_alkaloid_biosynthesis:   # BIA → 原小檗碱型（berberine 等）
+    genes: []
+    enzymes: ["6OMT", "CNMT", "N7OMT", "4OMT", "BBE", "CYP719A"]
+    known_regulators: []               # 显式未知：该物种已知调控因子缺口
+
+refs:
+  - "中国药典 2020 版（黄连）"
+  - "NCBI Taxonomy: 61731"

@@ -1,0 +1,64 @@
+# Glycyrrhiza uralensis (甘草) — 物种知识 profile
+# schema 见同目录 README.md；新增物种 = 复制本文件为新 slug.yaml。
+#
+# 数据说明：
+#   - 三萜皂苷（甘草酸）mz 为 [M+H]+；黄酮类 mz 为 [M+H]+
+#   - fragments 为诊断碎片离子，标注来源等级（药典/文献/推测）
+#   - pathway_prior.known_regulators 留空 = 显式"未知"（不编造已知调控因子）
+
+species:
+  scientific_name: Glycyrrhiza uralensis
+  common_name: 甘草
+  taxonomy_id: 74613
+  genome_status: partial              # 有基因组组装（draft/染色体级），注释完整性有限
+
+marker_metabolites:
+  - name: glycyrrhizin
+    formula: C42H62O16
+    mz: 823.4111                      # [M+H]+（甘草酸，3-O-双葡萄糖醛酸苷）
+    adducts: ["[M+H]+", "[M-H]-"]
+    fragments:
+      - { mz: 647.3797, formula: "C36H55O10", annotation: "[M+H-GlcA]+" }
+      - { mz: 471.3469, formula: "C30H47O4", annotation: "[M+H-2GlcA]+ (glycyrrhetinic acid)" }
+    reference_rt: null
+    source: 药典
+  - name: glycyrrhetinic_acid
+    formula: C30H46O4
+    mz: 471.3469                      # [M+H]+
+    adducts: ["[M+H]+", "[M-H]-"]
+    fragments:
+      - { mz: 453.3363, formula: "C30H45O3", annotation: "[M+H-H2O]+" }
+      - { mz: 425.3414, formula: "C29H45O2", annotation: "[M+H-CO-H2O]+" }
+    reference_rt: null
+    source: 文献
+  - name: liquiritigenin
+    formula: C15H12O4
+    mz: 257.0808                      # [M+H]+（甘草素，二氢黄酮）
+    adducts: ["[M+H]+", "[M-H]-"]
+    fragments:
+      - { mz: 239.0702, formula: "C15H11O3", annotation: "[M+H-H2O]+" }
+      - { mz: 137.0233, formula: "C7H5O3", annotation: "RDA A-ring fragment" }
+    reference_rt: null
+    source: 文献
+  - name: liquiritin
+    formula: C21H22O9
+    mz: 419.1337                      # [M+H]+（甘草素-4'-O-葡萄糖苷）
+    adducts: ["[M+H]+", "[M-H]-"]
+    fragments:
+      - { mz: 257.0808, formula: "C15H12O4", annotation: "[M+H-Glc]+" }
+    reference_rt: null
+    source: 文献
+
+pathway_prior:
+  triterpenoid_saponin_biosynthesis:  # 甘草酸（MVA → 鲨烯 → 2,3-氧化鲨烯 → β-香树脂醇 → 甘草酸）
+    genes: []
+    enzymes: ["β-amyrin synthase", "CYP88D6", "CYP72A154", "UGT73P2", "UGT73P12"]
+    known_regulators: []              # 显式未知：该物种已知调控因子缺口
+  flavanone_biosynthesis:             # 甘草素/异甘草素类
+    genes: []
+    enzymes: ["PAL", "C4H", "4CL", "CHS", "CHI", "CHR"]
+    known_regulators: []
+
+refs:
+  - "中国药典 2020 版（甘草）"
+  - "NCBI Taxonomy: 74613"

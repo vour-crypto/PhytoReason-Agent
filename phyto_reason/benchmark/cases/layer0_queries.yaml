@@ -1,0 +1,101 @@
+# B03: Layer 0 查询标准答案（知识层召回评估）
+# 用途: TFKnowledgeBase / compound_profiles / SpeciesRegistry 的召回测试输入。
+# 评估为本地自动化（无网络）：用 metabolite/species 字段查询知识层，验证 expected_* 是否被召回。
+
+- id: L0-001
+  metabolite: "berberine"
+  species: ""
+  query: "已知调控小檗碱（berberine）生物合成的转录因子有哪些？"
+  expected_tf_families: ["MYB", "bHLH", "WRKY"]
+  expected_pathway: "isoquinoline alkaloid biosynthesis"
+  expected_compound_class: "berberine_protoberberine"
+  evaluation: "auto"
+
+- id: L0-002
+  metabolite: "anthocyanin"
+  species: ""
+  query: "MYB 转录因子是否调控植物花青素（anthocyanin）合成？"
+  expected_tf_families: ["MYB", "bHLH", "WD40"]
+  expected_compound_class: "anthocyanidin"
+  evaluation: "auto"
+
+- id: L0-003
+  metabolite: "nicotine"
+  species: ""
+  query: "尼古丁（nicotine）的生物合成途径是什么？"
+  expected_pathway: "pyridine alkaloid biosynthesis"
+  expected_enzymes: ["PMT", "MPO", "QPT", "A622"]
+  evaluation: "auto"
+
+- id: L0-004
+  metabolite: "artemisinin"
+  species: ""
+  query: "调控青蒿素（artemisinin）合成的转录因子有哪些？"
+  expected_tf_families: ["WRKY", "ERF", "bHLH", "MYB"]
+  expected_compound_class: "sesquiterpene_lactone"
+  evaluation: "auto"
+
+- id: L0-005
+  metabolite: "quercetin"
+  species: ""
+  query: "槲皮素（quercetin）的调控因子？"
+  expected_tf_families: ["MYB", "bHLH", "WRKY", "ERF"]
+  expected_compound_class: "flavonol"
+  evaluation: "auto"
+
+- id: L0-006
+  metabolite: "tanshinone_IIA"
+  species: ""
+  query: "丹参酮 IIA（tanshinone IIA）属于哪类化合物，通路关键酶有哪些？"
+  expected_compound_class: "diterpenoid_quinone"
+  expected_enzymes: ["CPS", "KSL", "CYP76AH1"]
+  evaluation: "auto"
+
+- id: L0-007
+  metabolite: "glycyrrhizin"
+  species: ""
+  query: "甘草酸（glycyrrhizin）的类别与通路？"
+  expected_compound_class: "oleanane_triterpenoid_saponin"
+  expected_enzymes: ["CYP88D6", "CYP72A154", "β-amyrin synthase"]
+  evaluation: "auto"
+
+- id: L0-008
+  metabolite: "caffeic_acid"
+  species: ""
+  query: "咖啡酸（caffeic acid）的质谱诊断碎片？"
+  expected_compound_class: "hydroxycinnamic_acid"
+  expected_fragment: 135.0446
+  evaluation: "auto"
+
+- id: L0-009
+  metabolite: "baicalein"
+  species: ""
+  query: "黄芩素（baicalein）的类别与诊断碎片？"
+  expected_compound_class: "flavone"
+  expected_fragment: 153.0182
+  evaluation: "auto"
+
+- id: L0-010
+  metabolite: "caffeine"
+  species: ""
+  query: "咖啡因（caffeine）的调控因子？"
+  expected_tf_families: ["bZIP", "HSF", "HD-ZIP"]
+  expected_compound_class: "purine_alkaloid"
+  evaluation: "auto"
+
+- id: L0-011
+  metabolite: "berberine"
+  species: "Coptis chinensis"
+  query: "黄连（Coptis chinensis）的标志代谢物与通路？"
+  expected_species: "coptis_chinensis"
+  expected_metabolites: ["berberine", "coptisine"]
+  expected_level: "profile"
+  evaluation: "auto"
+
+- id: L0-012
+  metabolite: "glycyrrhizin"
+  species: "Glycyrrhiza uralensis"
+  query: "甘草（Glycyrrhiza uralensis）的知识层级？"
+  expected_species: "glycyrrhiza_uralensis"
+  expected_level: "profile"
+  evaluation: "auto"

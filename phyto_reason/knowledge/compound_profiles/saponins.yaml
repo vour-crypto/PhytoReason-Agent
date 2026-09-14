@@ -1,0 +1,67 @@
+# Saponin MS/MS Fragmentation Rules Database
+# 由 knowledge/compound_profiles/__init__.py 加载（规范入口）。
+#
+# 皂苷类诊断核心是糖链阶梯丢失（aglycone + n×糖），
+# 母核碎片（皂苷元+H）是类别判定的金标准。
+#
+# Each entry defines a structural class with:
+#   class            - saponin subclass name
+#   formula          - base molecular formula (neutral, representative)
+#   mass             - monoisotopic mass (Da, representative)
+#   fragments        - diagnostic MS² fragment ions (sugar-loss ladder)
+#   adducts          - common ionization adducts
+#   known_metabolites- 该类典型代谢物（用于名称→规则检索）
+#   pathway          - biosynthetic pathway origin
+#   confidence       - rule reliability: high / medium / low
+
+saponins:
+
+  - class: oleanane_triterpenoid_saponin
+    formula: C42H62O16
+    mass: 822.4038
+    fragments:
+      - { mz: 823.4111, formula: "C42H63O16", annotation: "glycyrrhizin [M+H]+" }
+      - { mz: 647.3797, formula: "C36H55O10", annotation: "[M+H-GlcA]+" }
+      - { mz: 471.3469, formula: "C30H47O4",  annotation: "[M+H-2GlcA]+ (glycyrrhetinic acid)" }
+      - { mz: 453.3363, formula: "C30H45O3",  annotation: "aglycone-H2O" }
+    adducts: ["[M+H]+", "[M-H]-", "[M+Na]+"]
+    known_metabolites: [glycyrrhizin, glycyrrhetinic_acid, saikosaponin_a, saikosaponin_d, astragaloside_IV]
+    pathway: MVA → β-amyrin → oleanane (CYP + UGT 糖基化)
+    confidence: high
+
+  - class: dammarane_triterpenoid_saponin
+    formula: C42H72O14
+    mass: 800.4922
+    fragments:
+      - { mz: 801.4995, formula: "C42H73O14", annotation: "ginsenoside Rg1 [M+H]+" }
+      - { mz: 639.4467, formula: "C36H63O9",  annotation: "[M+H-Glc]+" }
+      - { mz: 477.3938, formula: "C30H53O4",  annotation: "[M+H-2Glc]+ (protopanaxatriol)" }
+      - { mz: 1109.6104, formula: "C54H93O23", annotation: "ginsenoside Rb1 [M+H]+" }
+      - { mz: 461.3989, formula: "C30H53O3",  annotation: "protopanaxadiol [M+H]+" }
+    adducts: ["[M+H]+", "[M+Na]+", "[M-H]-"]
+    known_metabolites: [ginsenoside_rg1, ginsenoside_rb1, ginsenoside_re, ginsenoside_rc, ginsenoside_rd, notoginsenoside_r1]
+    pathway: MVA → dammarenyl cation → PPD/PPT → CYP + UGT 糖基化
+    confidence: medium
+
+  - class: steroid_saponin
+    formula: C45H72O16
+    mass: 868.4821
+    fragments:
+      - { mz: 869.4889, formula: "C45H73O16", annotation: "dioscin [M+H]+" }
+      - { mz: 415.3207, formula: "C27H43O3",  annotation: "diosgenin aglycone [M+H]+" }
+      - { mz: 397.3101, formula: "C27H41O2",  annotation: "aglycone-H2O" }
+      - { mz: 723.4311, formula: "C39H63O12", annotation: "[M+H-Rha]+" }
+    adducts: ["[M+H]+", "[M+Na]+"]
+    known_metabolites: [dioscin, diosgenin, trillin, gracillin, polyphyllin_VII]
+    pathway: cholesterol → spirostanol (diosgenin) → 糖基化
+    confidence: medium
+
+# 皂苷类常见中性丢失（糖链阶梯）
+neutral_losses:
+  - { delta: 18.0106, annotation: "H2O (water)" }
+  - { delta: 132.0423, annotation: "C5H8O4 (pentose)" }
+  - { delta: 146.0579, annotation: "C6H10O4 (deoxyhexose/rhamnose)" }
+  - { delta: 162.0528, annotation: "C6H10O5 (hexose)" }
+  - { delta: 176.0321, annotation: "C6H8O6 (glucuronide)" }
+  - { delta: 308.1107, annotation: "C12H20O9 (rutinose)" }
+  - { delta: 324.1056, annotation: "C12H20O10 (gentiobiose)" }

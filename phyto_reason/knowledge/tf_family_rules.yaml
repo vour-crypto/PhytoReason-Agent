@@ -1,0 +1,131 @@
+# 植物转录因子家族 HMM 判定规则（PhytoReason TF 预测）
+#
+# 方法学与 iTAK（Zheng et al. 2020, NAR）一致：Pfam HMM 扫描 + 家族规则判定。
+# 每条 accession 均于 2026-09-13 经 EBI InterPro API 逐条核验
+# （ Pfam 名称与家族语义一致才收录；两轮共否决 14 条凭记忆的错误映射 ）。
+#
+# rule 字段:
+#   any  = 命中规则内任一 Pfam 即候选
+#   all  = 必须同时命中全部 Pfam（更特异）
+# 多家族同时命中时：all 规则优先于 any，同级取比特分最高者。
+#
+# note: Trihelix 的 PF13837 在 Pfam 中命名为 Myb/SANT-like DNA-bind_4，
+#       该结构域即 trihelix（GT factor）DNA 结合域，保留收录。
+
+families:
+  MYB:
+    rule: any
+    pfam: [PF00249]
+    note: Myb-like DNA-binding
+  bHLH:
+    rule: any
+    pfam: [PF00010]
+    note: Helix-loop-helix
+  NAC:
+    rule: any
+    pfam: [PF02365]
+    note: NAM/no apical meristem
+  WRKY:
+    rule: any
+    pfam: [PF03106]
+    note: WRKY DNA-binding
+  bZIP:
+    rule: any
+    pfam: [PF00170, PF07716]
+    note: bZIP_1 / bZIP_2
+  ERF:
+    rule: any
+    pfam: [PF00847]
+    note: AP2/ERF domain（AP2 与 ERF 共用）
+  B3:
+    rule: any
+    pfam: [PF02362]
+    note: B3 DNA binding
+  ARF:
+    rule: all
+    pfam: [PF02362, PF06507]
+    note: B3 + ARF ancillary（ARF_AD）；与裸 B3 区分
+  HD-ZIP:
+    rule: all
+    pfam: [PF00046, PF02183]
+    note: Homeodomain + HALZ
+  KNOX:
+    rule: all
+    pfam: [PF00046, PF03790]
+    note: Homeodomain + KNOX1（TALE 类）
+  HB_other:
+    rule: any
+    pfam: [PF00046]
+    note: 其余 Homeobox（WOX/PHD/LUG 等 v1 不细分）
+  C2H2:
+    rule: any
+    pfam: [PF00096]
+    note: zinc finger C2H2
+  SBP:
+    rule: any
+    pfam: [PF03110]
+    note: SBP box
+  GRAS:
+    rule: any
+    pfam: [PF03514]
+    note: GRAS（DELLA 等）
+  TCP:
+    rule: any
+    pfam: [PF03634]
+    note: TCP family
+  Dof:
+    rule: any
+    pfam: [PF02701]
+    note: Dof zinc finger
+  GATA:
+    rule: any
+    pfam: [PF00320]
+    note: GATA zinc finger
+  GRF:
+    rule: any
+    pfam: [PF08879]
+    note: WRC（GROWTH-REGULATING FACTOR）
+  HSF:
+    rule: any
+    pfam: [PF00447]
+    note: heat shock factor DNA-binding
+  MADS:
+    rule: any
+    pfam: [PF00319]
+    note: SRF-type MADS-box
+  ZF-HD:
+    rule: any
+    pfam: [PF04770]
+    note: ZF-HD dimerisation
+  E2F:
+    rule: any
+    pfam: [PF02319]
+    note: E2F/DP winged-helix
+  LFY:
+    rule: any
+    pfam: [PF01698]
+    note: Floricaula/Leafy SAM
+  NF-YA:
+    rule: any
+    pfam: [PF02045]
+    note: CCAAT-binding subunit A
+  NF-YB:
+    rule: any
+    pfam: [PF00808]
+    note: histone-like CBF/NF-Y subunit B
+  RWP-RK:
+    rule: any
+    pfam: [PF02042]
+    note: RWP-RK domain
+  Whirly:
+    rule: any
+    pfam: [PF08536]
+    note: Whirly single-stranded DNA-binding
+  EIL:
+    rule: any
+    pfam: [PF04873]
+    note: EIN3-like
+  Trihelix:
+    rule: any
+    pfam: [PF13837]
+    note: Myb/SANT-like（GT/trihelix）
